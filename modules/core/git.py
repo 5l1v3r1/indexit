@@ -1,5 +1,4 @@
 from git import Repo
-import os
 
 
 class Git:
@@ -11,18 +10,19 @@ class Git:
 
         # Clone the repo and checkout
         try:
-            os.system("git clone --single-branch --no-tags --depth 1 %s /tmp/indexit/git/%s > /dev/null 2>&1" % (
-                url, name
-            ))
-            repo = os.system("git -C %s rev-parse HEAD > /dev/null 2>&1" % location)
-            # repo = Repo.clone_from(url, location)
-            # repo.heads['master'].checkout()
+            args = {
+                'single-branch': True,
+                'no-tags': True,
+                'depth': 1
+            }
+            repo = Repo.clone_from(url, location, None, None, None, **args)
         except Exception as e:
+            print(e)
             return
         else:
             # Return the commit ID
             return {
                 'id': id,
                 'name': name,
-                'commit_id': repo
+                'commit_id': repo.head.object.hexsha
             }
