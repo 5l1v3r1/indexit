@@ -1,0 +1,16 @@
+######################
+# Threads to use
+######################
+THREADS: 50
+
+######################
+# Database information
+######################
+DATABASE:
+    name: 'harvested'
+
+######################
+# Github api tokens
+######################
+GITHUB_TOKENS:
+    - "1234"
