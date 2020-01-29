@@ -14,3 +14,19 @@ DATABASE:
 ######################
 GITHUB_TOKENS:
     - "1234"
+
+######################
+# Files/Folders
+######################
+FILES:
+    blacklisted_dirs:
+        - 'git'
+        - '.git'
+        - 'tests'
+        - 'test'
+    blacklisted_extensions:
+        - '.exe'
+        - '.png'
+        - '.jpg'
+        - '.zip'
+        - '.rar'
