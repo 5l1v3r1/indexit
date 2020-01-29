@@ -17,6 +17,7 @@ class Database:
         createContents = """
             CREATE TABLE IF NOT EXISTS contents(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repo_id INTEGER,
                 name varchar(32), 
                 file varchar(32), 
                 content TEXT,

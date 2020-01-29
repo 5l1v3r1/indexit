@@ -25,29 +25,30 @@ class Indexit:
         self.files = Files()
 
     # Get the repo
-    def run(self, repo):
+    def run(self, repo_id):
 
         # Don't run if already indexed
-        if self.repositories.indexed(repo):
+        if self.repositories.indexed(repo_id):
             return
 
         # Get the repo information
-        uri = "https://api.github.com/repositories/%d" % repo
+        uri = "https://api.github.com/repositories/%d" % repo_id
         repository = self.repositories.get(uri)
 
         # Clone the repo
         if 'html_url' in repository:
-            self.git.clone(
+            clone = self.git.clone(
                 repository['full_name'],
-                repository['html_url']
+                repository['html_url'],
+                repo_id
             )
 
             # Run through files and store contents
-            self.files.contents(repository['full_name'])
+            self.files.contents(clone)
 
             # Delete repo in temp folder
             self.repositories.delete(repository['full_name'])
-            
+
             print('Indexed ', uri)
 
     # Index threading

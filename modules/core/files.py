@@ -2,6 +2,7 @@ import os
 from modules.core.database import Database
 from config.files import Files as FilesConfig
 
+
 class Files:
 
     # Files constructor
@@ -10,13 +11,13 @@ class Files:
         self.file_config = FilesConfig()
 
     # Get the contents of the file and index it
-    def contents(self, name):
+    def contents(self, repo):
         # Our blacklisted extensions and folders
         exclude_extensions = set(self.file_config.blacklisted_extensions())
         exclude_dirs = set(self.file_config.blacklisted_dirs())
 
         # Get all the files/folders minus the blacklisted ones
-        for root, dirs, files in os.walk("/tmp/indexit/git/%s" % name, topdown=True):
+        for root, dirs, files in os.walk("/tmp/indexit/git/%s" % repo['name'], topdown=True):
 
             # Remove blacklisted files/folders
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
@@ -25,8 +26,10 @@ class Files:
                 try:
                     with open('%s/%s' % (root, file)) as f:
                         payload = {
-                            'name': name,
-                            'file': "%s/%s" % (name, file),
+                            'repo_id': repo['id'],
+                            'name': repo['name'],
+                            'commit_id': repo['commit_id'],
+                            'file': "%s" %  file,
                             'content': f.read()
                         }
                         self.save(payload)
@@ -37,14 +40,21 @@ class Files:
     def save(self, payload):
         sql = """
             INSERT INTO contents(
+                repo_id,
                 name,
                 file,
                 content,
                 commit_id
             )
-            VALUES(?, ?, ?, ?)
+            VALUES(?, ?, ?, ?, ?)
         """
-        data = (payload['name'], payload['file'], payload['content'], '1234')
+        data = (
+            payload['repo_id'],
+            payload['name'],
+            payload['file'],
+            payload['content'],
+            payload['commit_id']
+        )
 
         try:
             with self.connection.get() as connection:
