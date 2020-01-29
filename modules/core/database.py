@@ -18,6 +18,7 @@ class Database:
             CREATE TABLE IF NOT EXISTS contents(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name varchar(32), 
+                file varchar(32), 
                 content TEXT,
                 commit_id varchar(32),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

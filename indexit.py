@@ -49,7 +49,7 @@ class Indexit:
     def main(self):
         # Pool connections to speed up our job
         with Pool(processes=Threads().total()) as pool:
-            pool.map(self.run, range(10))
+            pool.map(self.run, range(1000))
 
 # Indexit logo
 print(logo)
