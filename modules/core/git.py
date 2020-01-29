@@ -15,7 +15,7 @@ class Git:
                 'no-tags': True,
                 'depth': 1
             }
-            repo = Repo.clone_from(url, location, None, None, None, **args)
+            repo = Repo.clone_from(url, location, **args)
         except Exception as e:
             print(e)
             return
