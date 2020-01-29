@@ -8,5 +8,5 @@ Indexit allows you to scrape Github and index every (public) repository and its 
 
 
 - Better rate limit checking/management.
-- Batch insert in to database to speed it up??
+- Speed up git clone
 - Once indexed, check for updated code
