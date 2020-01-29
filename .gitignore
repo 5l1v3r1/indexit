@@ -1,4 +1,5 @@
 .idea
+index.sqlite
 config.yml
 config/__pycache__
 modules/github/__pycache__

@@ -10,4 +10,5 @@ class Boot:
 
     # Boot constructor
     def __init__(self):
+        self.database = Database().initalize()
         self.config = yaml.safe_load(open('./config.yml'))

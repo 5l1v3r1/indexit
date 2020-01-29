@@ -10,7 +10,7 @@ logo = f"""
 #                                                                   #
 # Indexit: Created by @Filtration                                   #
 #                                                                   #
-# Index it stores github repos in the database for better searches  #
+# Indexit stores github repos in the database for better searches   #
 #                                                                   #
 {'#' * 69}
 """
@@ -45,14 +45,11 @@ class Indexit:
             # Run through files and store contents
             self.files.contents(repository['full_name'])
 
-
+    # Index threading
     def main(self):
-        #Pool connections to speed up our job
+        # Pool connections to speed up our job
         with Pool(processes=Threads().total()) as pool:
             pool.map(self.run, range(10))
-
-        # print(self.repos)
-
 
 # Indexit logo
 print(logo)

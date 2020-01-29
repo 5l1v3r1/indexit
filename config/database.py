@@ -1,5 +1,9 @@
+from modules.core.config import *
+
+
 class Database:
 
     # Get the database name
     def name(self):
-        pass
+        return "%s.sqlite" % config['DATABASE']['name']
+
