@@ -7,6 +7,7 @@ class Files:
 
     # Files constructor
     def __init__(self):
+        self.files = []
         self.connection = Database()
         self.file_config = FilesConfig()
 
@@ -30,19 +31,21 @@ class Files:
 
                     # Open the file and save the contents
                     with open('%s/%s' % (root, file)) as f:
-                        payload = {
-                            'repo_id': repo['id'],
-                            'name': repo['name'],
-                            'commit_id': repo['commit_id'],
-                            'file': location,
-                            'content': f.read()
-                        }
-                        self.save(payload)
+                        self.files.append((
+                            repo['id'],
+                            repo['name'],
+                            location,
+                            f.read(),
+                            repo['commit_id']
+                        ))
                 except:
                     break
 
+        # Save all files
+        self.save()
+
     # Save file to database
-    def save(self, payload):
+    def save(self):
         sql = """
             INSERT INTO contents(
                 repo_id,
@@ -53,18 +56,10 @@ class Files:
             )
             VALUES(?, ?, ?, ?, ?)
         """
-        data = (
-            payload['repo_id'],
-            payload['name'],
-            payload['file'],
-            payload['content'],
-            payload['commit_id']
-        )
-
         try:
             with self.connection.get() as connection:
                 cur = connection.cursor()
-                cur.execute(sql, data)
+                cur.executemany(sql, self.files)
         except Exception as e:
             print(e)
 
