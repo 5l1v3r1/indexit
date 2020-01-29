@@ -18,6 +18,8 @@ Well, indexit can index about a million files every 10 minutes or so (once refac
 
 ### Todo
 
+- Better contents storage, compress the file contents
+- Replace sqlite with an adapter for multiple databases
 - Better rate limit checking/management.
 - Speed up git clone
 - Once indexed, check for updated code
