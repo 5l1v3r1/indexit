@@ -20,10 +20,6 @@ class Repositories:
             except:
                 return
 
-    # Clone the repository
-    def clone(self, name, url):
-        os.system("git clone %s /tmp/indexit/git/%s" % (url, name))
-
     # Delete repo files on system
     def delete(self, name):
         os.system("rm -rf /tmp/indexit/git/%s" % name)
