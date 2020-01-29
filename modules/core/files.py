@@ -22,7 +22,6 @@ class Files:
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
             files[:] = [f for f in files if f not in exclude_extensions]
             for file in files:
-                print(file)
                 try:
                     with open('%s/%s' % (root, file)) as f:
                         payload = {

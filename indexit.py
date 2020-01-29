@@ -45,11 +45,17 @@ class Indexit:
             # Run through files and store contents
             self.files.contents(repository['full_name'])
 
+            # Delete repo in temp folder
+            self.repositories.delete(repository['full_name'])
+            
+            print('Indexed ', uri)
+
     # Index threading
     def main(self):
         # Pool connections to speed up our job
         with Pool(processes=Threads().total()) as pool:
-            pool.map(self.run, range(1000))
+            pool.map(self.run, range(100000000))
+
 
 # Indexit logo
 print(logo)

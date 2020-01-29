@@ -1,5 +1,6 @@
 .idea
 index.sqlite
+index.sqlite-journal
 config.yml
 config/__pycache__
 modules/github/__pycache__
