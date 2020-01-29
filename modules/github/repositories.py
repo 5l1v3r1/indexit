@@ -12,13 +12,15 @@ class Repositories:
                 with requests.get(uri, headers={'Authorization': 'token %s' % token}) as response:
                     data = json.loads(response.text)
                     if 'message' in data and 'API rate limit' in data['message']:
-                        print("rate limit hit, retrying...")
+                        print("Rate limit hit with: ", token)
+                        continue
                     if 'message' in data and 'Bad credentials' in data['message']:
-                        print("Your credentials are wrong!!")
+                        print("Wrong credentials for ", token)
+                        continue
                     else:
                         return data
             except:
-                return
+                continue
 
     # Delete repo files on system
     def delete(self, name):
