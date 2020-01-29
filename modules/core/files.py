@@ -24,12 +24,17 @@ class Files:
             files[:] = [f for f in files if f not in exclude_extensions]
             for file in files:
                 try:
+                    # Remove full temp path and repo name from file path
+                    tmp_location = "%s/%s" % (root, file)
+                    location = tmp_location.replace('/tmp/indexit/git/%s/' % repo['name'], '')
+
+                    # Open the file and save the contents
                     with open('%s/%s' % (root, file)) as f:
                         payload = {
                             'repo_id': repo['id'],
                             'name': repo['name'],
                             'commit_id': repo['commit_id'],
-                            'file': "%s" %  file,
+                            'file': location,
                             'content': f.read()
                         }
                         self.save(payload)
