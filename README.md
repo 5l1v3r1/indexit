@@ -10,7 +10,7 @@ Indexit allows you to scrape Github and index every (public) repository and its 
 - ``` sudo chmod +x install.sh  ```
 - ``` . ./install.sh ```
 - ``` cp config.example.yml config.yml ```
-- ``` python ./indexit.py  `
+- ``` python ./indexit.py  ```
 
 ### Why?
 
