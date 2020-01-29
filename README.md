@@ -14,7 +14,7 @@ Indexit allows you to scrape Github and index every (public) repository and its 
 
 ### Why?
 
-Well, indexit can index about a million files every 10 minutes or so (once refactored it will be more), and this will give us the option to do regex search code to find credentials/passwords or anything else.
+Well, indexit can index about a million files every 10 minutes or so (once refactored it will be more), and this will give us the option to regex search code to find credentials/passwords or anything else.
 
 ### Todo
 
