@@ -35,6 +35,8 @@ class Indexit:
         uri = "https://api.github.com/repositories/%d" % repo
         repository = self.repositories.get(uri)
 
+        print(repository)
+
         # Clone the repo
         if 'html_url' in repository:
             self.git.clone(
