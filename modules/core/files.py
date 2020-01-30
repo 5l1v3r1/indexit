@@ -28,12 +28,11 @@ class Files:
                     location = tmp_location.replace('/tmp/indexit/git/%s/' % repo['name'], '')
 
                     # Open the file and save the contents
-                    with open('%s/%s' % (root, file), 'rb') as f:
+                    with open('%s/%s' % (root, file), 'r', encoding='latin-1') as f:
                         self.files.append((
                             repo['id'],
                             repo['name'],
                             location,
-                            json.dumps(f.read().decode('utf-8').strip()),
                             f.read(),
                             repo['commit_id']
                         ))

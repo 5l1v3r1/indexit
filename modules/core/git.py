@@ -25,8 +25,11 @@ class Git:
             return
         else:
             # Return the commit ID
-            return {
-                'id': id,
-                'name': name,
-                'commit_id': repo.head.object.hexsha
-            }
+            try:
+                return {
+                    'id': id,
+                    'name': name,
+                    'commit_id': repo.head.object.hexsha
+                }
+            except:
+                return

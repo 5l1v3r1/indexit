@@ -12,6 +12,9 @@ class Database:
     @staticmethod
     def mysql():
         return {
+            'pool_name': "indexit",
+            'pool_size': config['DATABASE']['mysql']['pool_size'],
+            'pool_reset_session': True,
             'user': config['DATABASE']['mysql']['user'],
             'password': config['DATABASE']['mysql']['password'],
             'host': config['DATABASE']['mysql']['host'],

@@ -1,7 +1,7 @@
 ######################
 # Threads to use
 ######################
-THREADS: 50
+THREADS: 5
 
 ######################
 # Database information

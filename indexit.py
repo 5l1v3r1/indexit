@@ -21,6 +21,7 @@ class Indexit:
 
     # Indexit constructor
     def __init__(self):
+        self.database = Database.connect()
         self.repositories = Repositories()
         self.git = Git()
         self.files = Files()
@@ -28,7 +29,9 @@ class Indexit:
     # Get the repo
     def run(self, repo_id):
         # initiate database
-        database = Database.connect()
+        database = self.database.get_connection()
+        print(database)
+        # database = Database.connect().get_connection()
 
         # Don't run if already indexed
         if self.repositories.indexed(repo_id):
@@ -46,29 +49,23 @@ class Indexit:
                 repo_id
             )
 
-            # Run through files and store contents
-            files = self.files.contents(clone)
+            if clone:
+                # Run through files and store contents
+                files = self.files.contents(clone)
 
-            # Save files to database
-            Database.save(database, files)
+                # Save files to database
+                Database.save(database, files)
 
             # Delete repo in temp folder
             self.repositories.delete(repository['full_name'])
 
             print('Indexed ', uri)
 
-
     # Index threading
     def main(self):
-        yappi.start()
         # Pool connections to speed up our job
-        # with Pool(processes=Threads().total()) as pool:
-        #     pool.map(self.run, range(30))
-
-        for i in range(100):
-            self.run(i)
-        yappi.get_func_stats().print_all()
-        yappi.get_thread_stats().print_all()
+        with Pool(processes=Threads().total()) as pool:
+            pool.map(self.run, range(10000000))
 
 
 # Indexit logo

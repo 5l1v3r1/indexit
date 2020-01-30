@@ -1,5 +1,7 @@
 import sqlite3
 import mysql.connector
+from mysql.connector import Error
+from mysql.connector import pooling
 from config.database import Database as Config
 from modules.core.database.adapters.sqlite import Sqlite
 from modules.core.database.adapters.mysql import Mysql
@@ -19,6 +21,6 @@ class Database:
     @staticmethod
     def connect():
         if Config().type() == 'mysql':
-            return mysql.connector.connect(**Config().mysql())
+            return mysql.connector.pooling.MySQLConnectionPool(**Config().mysql())
         elif Config().type() == 'sqlite':
             return sqlite3.connect("%s.sqlite" % Config().sqlite())

@@ -20,8 +20,7 @@ class Sqlite:
         database = sqlite.get()
         try:
             with database as connection:
-                cur = connection.cursor()
-                cur.executemany(sql, files)
+                connection.executemany(sql, files)
         except Exception as e:
             print(e)
 
