@@ -4,24 +4,12 @@ from modules.core.git import Git
 from modules.core.files import Files
 from modules.core.database.database import Database
 from config.threads import Threads
-import yappi
-
-logo = f"""
-{'#' * 69}
-#                                                                   #
-# Indexit: Created by @Filtration                                   #
-#                                                                   #
-# Indexit stores github repos in the database for better searches   #
-#                                                                   #
-{'#' * 69}
-"""
 
 
 class Indexit:
 
     # Indexit constructor
     def __init__(self):
-        self.database = Database.connect()
         self.repositories = Repositories()
         self.git = Git()
         self.files = Files()
@@ -29,9 +17,7 @@ class Indexit:
     # Get the repo
     def run(self, repo_id):
         # initiate database
-        database = self.database.get_connection()
-        print(database)
-        # database = Database.connect().get_connection()
+        database = Database.connect().get_connection()
 
         # Don't run if already indexed
         if self.repositories.indexed(repo_id):
@@ -67,6 +53,16 @@ class Indexit:
         with Pool(processes=Threads().total()) as pool:
             pool.map(self.run, range(10000000))
 
+
+logo = f"""
+{'#' * 69}
+#                                                                   #
+# Indexit: Created by @Filtration                                   #
+#                                                                   #
+# Indexit stores github repos in the database for better searches   #
+#                                                                   #
+{'#' * 69}
+"""
 
 # Indexit logo
 print(logo)
