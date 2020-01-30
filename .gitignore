@@ -5,3 +5,5 @@ config.yml
 config/__pycache__
 modules/github/__pycache__
 modules/core/__pycache__
+modules/__pycache_
+modules/core/database/__pycache__
