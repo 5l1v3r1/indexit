@@ -26,7 +26,9 @@ class Indexit:
         self.files = Files()
 
     # Get the repo
-    def run(self, database, repo_id):
+    def run(self, repo_id):
+        # initiate database
+        database = Database.connect()
 
         # Don't run if already indexed
         if self.repositories.indexed(repo_id):
@@ -55,21 +57,16 @@ class Indexit:
 
             print('Indexed ', uri)
 
-    # Some boot code for the DB
-    @staticmethod
-    def boot():
-        return Database.connect()
 
     # Index threading
     def main(self):
         yappi.start()
-        database = self.boot()
         # Pool connections to speed up our job
         # with Pool(processes=Threads().total()) as pool:
         #     pool.map(self.run, range(30))
 
         for i in range(100):
-            self.run(database, i)
+            self.run(i)
         yappi.get_func_stats().print_all()
         yappi.get_thread_stats().print_all()
 

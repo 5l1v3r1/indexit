@@ -16,7 +16,9 @@ class Database:
             'password': config['DATABASE']['mysql']['password'],
             'host': config['DATABASE']['mysql']['host'],
             'database': config['DATABASE']['mysql']['database'],
-            'auth_plugin': 'mysql_native_password'
+            'auth_plugin': 'mysql_native_password',
+            'charset': 'utf8',
+            'use_unicode': True
         }
 
     # Sqlite connection

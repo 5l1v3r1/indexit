@@ -19,7 +19,9 @@ class Mysql:
         try:
             cur = self.database.cursor()
             cur.executemany(sql, files)
+            print(files)
             self.database.commit()
+            self.database.close()
         except Exception as e:
             print("error", e)
 
