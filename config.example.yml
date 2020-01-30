@@ -7,7 +7,15 @@ THREADS: 50
 # Database information
 ######################
 DATABASE:
-    name: 'harvested'
+    type: 'mysql'
+    mysql:
+        user: 'indexit'
+        password: 'indexit'
+        host: '127.0.0.1'
+        database: 'indexit'
+        port: 3306
+    sqlite:
+        name: 'index'
 
 ######################
 # Github api tokens

@@ -1,5 +1,4 @@
 import os
-from modules.core.database import Database
 from config.files import Files as FilesConfig
 
 
@@ -8,7 +7,6 @@ class Files:
     # Files constructor
     def __init__(self):
         self.files = []
-        self.connection = Database()
         self.file_config = FilesConfig()
 
     # Get the contents of the file and index it
@@ -42,26 +40,7 @@ class Files:
                     break
 
         # Save all files
-        self.save()
-
-    # Save file to database
-    def save(self):
-        sql = """
-            INSERT INTO contents(
-                repo_id,
-                name,
-                file,
-                content,
-                commit_id
-            )
-            VALUES(?, ?, ?, ?, ?)
-        """
-        try:
-            with self.connection.get() as connection:
-                cur = connection.cursor()
-                cur.executemany(sql, self.files)
-        except Exception as e:
-            print(e)
+        return self.files
 
 
 

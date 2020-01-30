@@ -2,8 +2,9 @@ from multiprocessing import Pool
 from modules.github.repositories import Repositories
 from modules.core.git import Git
 from modules.core.files import Files
+from modules.core.database.database import Database
 from config.threads import Threads
-from modules.core.boot import Boot
+import yappi
 
 logo = f"""
 {'#' * 69}
@@ -25,7 +26,7 @@ class Indexit:
         self.files = Files()
 
     # Get the repo
-    def run(self, repo_id):
+    def run(self, database, repo_id):
 
         # Don't run if already indexed
         if self.repositories.indexed(repo_id):
@@ -44,25 +45,37 @@ class Indexit:
             )
 
             # Run through files and store contents
-            self.files.contents(clone)
+            files = self.files.contents(clone)
+
+            # Save files to database
+            Database.save(database, files)
 
             # Delete repo in temp folder
             self.repositories.delete(repository['full_name'])
 
             print('Indexed ', uri)
 
+    # Some boot code for the DB
+    @staticmethod
+    def boot():
+        return Database.connect()
+
     # Index threading
     def main(self):
+        yappi.start()
+        database = self.boot()
         # Pool connections to speed up our job
-        with Pool(processes=Threads().total()) as pool:
-            pool.map(self.run, range(100000000))
+        # with Pool(processes=Threads().total()) as pool:
+        #     pool.map(self.run, range(30))
+
+        for i in range(100):
+            self.run(database, i)
+        yappi.get_func_stats().print_all()
+        yappi.get_thread_stats().print_all()
 
 
 # Indexit logo
 print(logo)
-
-# Boot method (LEAVE ALONE)
-Boot()
 
 # Let's go!
 Indexit().main()
