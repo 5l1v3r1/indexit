@@ -17,10 +17,33 @@ class Database:
         elif Config().type() == 'mysql':
             Mysql(database).save(files)
 
+    # Add to indexed
+    @staticmethod
+    def indexed(database, repo_id):
+        if Config().type() == 'sqlite':
+            Sqlite(database).indexed(repo_id)
+        elif Config().type() == 'mysql':
+            Mysql(database).indexed(repo_id)
+
+    # check if repo has been indexed
+    @staticmethod
+    def has_been_indexed(database, repo_id):
+        if Config().type() == 'sqlite':
+            Sqlite(database).has_been_indexed(repo_id)
+        elif Config().type() == 'mysql':
+            Mysql(database).has_been_indexed(repo_id)
+
     # Connect to the database
     @staticmethod
     def connect():
-        if Config().type() == 'mysql':
-            return mysql.connector.pooling.MySQLConnectionPool(**Config().mysql())
-        elif Config().type() == 'sqlite':
-            return sqlite3.connect("%s.sqlite" % Config().sqlite())
+        for attempt in range(20):
+            try:
+                if Config().type() == 'mysql':
+                    connector = mysql.connector.pooling.MySQLConnectionPool(**Config().mysql())
+                elif Config().type() == 'sqlite':
+                    connector = sqlite3.connect("%s.sqlite" % Config().sqlite())
+            except:
+                pass
+            else:
+                return connector
+

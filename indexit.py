@@ -20,7 +20,7 @@ class Indexit:
         database = Database.connect().get_connection()
 
         # Don't run if already indexed
-        if self.repositories.indexed(repo_id):
+        if Database.has_been_indexed(database, repo_id):
             return
 
         # Get the repo information
@@ -41,6 +41,12 @@ class Indexit:
 
                 # Save files to database
                 Database.save(database, files)
+
+                # Add to indexed
+                Database.indexed(database, repo_id)
+
+                # close the databae
+                database.close()
 
             # Delete repo in temp folder
             self.repositories.delete(repository['full_name'])

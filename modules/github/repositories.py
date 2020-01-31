@@ -25,8 +25,3 @@ class Repositories:
     # Delete repo files on system
     def delete(self, name):
         os.system("rm -rf /tmp/indexit/git/%s" % name)
-
-    # Already indexed?
-    def indexed(self, name):
-        # db: identifier = github id in url
-        return False
